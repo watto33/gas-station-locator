@@ -1,5 +1,17 @@
 <%- include('../includes/head.ejs') %>
 <link rel="stylesheet" href="/css/cart.css">
+<style>
+  body{
+    background: #2980b9;  
+background: -webkit-linear-gradient(to right, #2c3e50, #2980b9);  
+background: linear-gradient(to right, #2c3e50, #2980b9); 
+
+
+  }
+  .cart__item-list{
+  background-color: #fff;
+}
+</style>
 </head>
 
 <body>
@@ -14,7 +26,7 @@
         <%})%>
     </ul>
     <div class="centered">
-      <h2>Total: <%= totalPrice %></h2>
+      <h2 style="color: #fff;">Total: <%= totalPrice %></h2>
     </div>
     <div class="centered">
       <button id="order-btn" class="btn">ORDER</button>
