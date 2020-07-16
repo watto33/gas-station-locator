@@ -1,0 +1,51 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+  <%- include('../includes/navigation.ejs') %>
+
+  <main>
+    <% if (prods.length > 0) { %>
+    <div class="grid">
+      <% for (let product of prods) { %>
+      <article class="card product-item">
+        <header class="card__header">
+          <h1 class="product__name">
+            <%= product.name %>
+          </h1>
+        </header>
+        <div class="card__image">
+          <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+        </div>
+        <div class="card__content">
+          <h4 class="product__cood">
+            Lat : <%= product.latitude %> | Lon : <%= product.longitude %>
+          </h4>
+          <h5 class="product__cood">
+            Available Petrol : <%= product.petrol %> | Price : <%= product.petrolAmount %>
+          </h5>
+          <h5 class="product__cood">
+            Available Diesel : <%= product.diesel %> | Price : <%= product.dieselAmount %>
+          </h5>
+          <p class="product__address">
+            <%= product.address %>
+          </p>
+        </div>
+        <div class="card__actions">
+          <a href="/admin/edit-station/<%= product._id %>?edit=true" class="btn">Edit</a>
+          <form action="/admin/delete-station" method="POST">
+            <input type="hidden" value="<%= product._id %>" name="productId">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit">Delete</button>
+          </form>
+
+        </div>
+      </article>
+      <% } %>
+    </div>
+    <% } else { %>
+    <h1>No Products Found!</h1>
+    <% } %>
+  </main>
+  <%- include('../includes/end.ejs') %>

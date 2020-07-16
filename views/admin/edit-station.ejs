@@ -1,0 +1,54 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+  <%- include('../includes/navigation.ejs') %>
+
+  <main>
+    <form class="product-form" action="/admin/<% if (editing) { %>edit-station<% } else { %>add-station<% } %>" method="POST">
+      <div class="form-control">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" value="<% if (editing) { %><%= product.name %><% } %>">
+      </div>
+      <div class="form-control">
+        <label for="imageUrl">Image URL</label>
+        <input type="text" name="imageUrl" id="imageUrl" value="<% if (editing) { %><%= product.imageUrl %><% } %>">
+      </div>
+      <div class="form-control">
+        <label for="latitude">Latitude</label>
+        <input type="text" name="latitude" id="latitude" step="0.01" value="<% if (editing) { %><%= product.latitude %><% } %>">
+      </div>
+      <div class="form-control">
+        <label for="longitude">Longitude</label>
+        <input type="text" name="longitude" id="longitude" step="0.01" value="<% if (editing) { %><%= product.longitude %><% } %>">
+      </div>
+      <div class="form-control">
+        <label for="address">Address</label>
+        <textarea name="address" id="address" rows="5"><% if (editing) { %><%= product.address %><% } %></textarea>
+      </div>
+      <div class="form-control">
+        <label for="petrol">Petrol</label>
+        <input type="number" name="petrol" step="0.01" id="petrol" value="<% if (editing) { %><%= product.petrol %><% } %>">
+      </div>
+      <div class="form-control">
+        <label for="petrolAmount">Petrol Amount</label>
+        <input type="number" step="0.01" name="petrolAmount" id="petrolAmount" value="<% if (editing) { %><%= product.petrolAmount %><% } %>">
+      </div>
+      <div class="form-control">
+        <label for="diesel">Diesel</label>
+        <input type="number" step="0.01" name="diesel" id="diesel" value="<% if (editing) { %><%= product.diesel %><% } %>">
+      </div>
+      <div class="form-control">
+        <label for="dieselAmount">Diesel Amount</label>
+        <input type="number" step="0.01" name="dieselAmount" id="dieselAmount" value="<% if (editing) { %><%= product.dieselAmount %><% } %>">
+      </div>
+      <% if (editing) { %>
+      <input type="hidden" value="<%= product._id %>" name="productId">
+      <% } %>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button class="btn" type="submit"><% if (editing) { %>Update Station<% } else { %>Add Station<% } %></button>
+    </form>
+  </main>
+  <%- include('../includes/end.ejs') %>

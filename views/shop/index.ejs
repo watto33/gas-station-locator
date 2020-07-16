@@ -1,0 +1,79 @@
+<%- include('../includes/head.ejs') %>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
+<style>
+  body {
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+.map {
+    display: flex;
+    height: 500px;
+    margin: auto;
+    width: 80%;
+    top: 50px;
+}
+
+.pad2 {
+  padding: 20px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.btn{
+  position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translate(-50%);
+}
+</style>
+</head>
+
+<body>
+<%- include('../includes/navigation.ejs') %>
+  <div>
+    <div id='map' class='map pad2'>Map</div>
+    <a href="/products" class="btn">See all nearby Gas stations</a>
+  </div>
+  <script>
+    let lat,lon;
+    mapboxgl.accessToken = 'pk.eyJ1IjoiZGVlcGkwOTg3IiwiYSI6ImNrY2l4MTQxajByZHUycW8zaXZ0YXl4b3AifQ.hA6JC5W1pgudGCiI8jH_Bg';
+
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [80, 13],
+  zoom: 4
+});
+var geolocate = new mapboxgl.GeolocateControl({
+					positionOptions: {
+						enableHighAccuracy: true,
+					},
+					trackUserLocation: true,
+				});
+       map.addControl(geolocate);
+       geolocate.on('geolocate',async function(e) {
+      lon = e.coords.longitude;
+      lat = e.coords.latitude;
+      var finalData = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/fuel.json?proximity=${lon},${lat}&access_token=pk.eyJ1IjoiZGVlcGkwOTg3IiwiYSI6ImNrY2l4MTQxajByZHUycW8zaXZ0YXl4b3AifQ.hA6JC5W1pgudGCiI8jH_Bg`)
+      let stores = await finalData.json();
+stores.features.forEach(function(store, i){
+  store.properties.id = i;
+});
+map.addLayer({
+    "id": "locations",
+    "type": "symbol",
+    /* Add a GeoJSON source containing place coordinates and information. */
+    "source": {
+      "type": "geojson",
+      "data": stores
+    },
+    "layout": {
+      "icon-image": "fuel-15",
+      "icon-allow-overlap": true,
+    }
+  });
+})
+  </script>
+</body>

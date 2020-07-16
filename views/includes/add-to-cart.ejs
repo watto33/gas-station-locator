@@ -1,0 +1,122 @@
+<!-- <form action="/cart" method="post">
+    <button class="btn" type="submit">Add to Cart</button>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" name="productId" value="<%= product._id %>">
+</form> -->
+<style>
+	.open-button {
+		background-color: #555;
+		color: white;
+		padding: 16px 20px;
+		border: none;
+		cursor: pointer;
+		opacity: 0.8;
+		position: fixed;
+		bottom: 23px;
+		right: 28px;
+		width: 280px;
+	}
+
+	/* The popup form - hidden by default */
+	.form-popup {
+		display: none;
+		position: absolute;
+		width: 60%;
+		margin: auto;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		border: 3px solid #000;
+		background-color: #7a19e9;
+		color: #fff;
+		z-index: 9;
+		transition: all 2s ease-in-out;
+	}
+
+	/* Add styles to the form container */
+	.form-container {
+		/* max-width: 300px; */
+		width: 90%;
+		margin: auto;
+		padding: 10px;
+		background-color: transparent;
+	}
+
+	.form-container input[type='number'] {
+		width: 95%;
+		padding: 15px;
+		margin: 5px 0 22px 0;
+		border: none;
+		background: #f1f1f1;
+	}
+
+	.form-container input[type='number']:focus {
+		background-color: #ddd;
+		outline: none;
+	}
+
+	.form-container .btn {
+		background-color: #4caf50;
+		color: white;
+		padding: 16px 20px;
+		border: none;
+		cursor: pointer;
+		width: 95%;
+		margin-bottom: 10px;
+
+		opacity: 0.8;
+	}
+
+	.form-container .cancel {
+		background-color: red;
+	}
+
+	.form-container .btn:hover,
+	.open-button:hover {
+		opacity: 1;
+	}
+</style>
+<a class="btn" onclick="getPrompt()">Add to cart</a>
+<div class="form-popup" id="myForm">
+	<form action="/co" class="form-container" method="POST">
+		<h1>Order Details</h1>
+
+		<label for="petrol"><b>Petrol</b></label>
+		<input
+			type="number"
+			placeholder="Enter the amount of petrol"
+			name="petrol"
+			required
+		/>
+
+		<label for="diesel"><b>Diesel</b></label>
+		<input
+			type="number"
+			placeholder="Enter the amount of diesel"
+			name="diesel"
+			required
+		/>
+		<input
+			type="hidden"
+			name="petrolAmount"
+			value="<%= product.petrolAmount %>"
+		/>
+		<input
+			type="hidden"
+			name="dieselAmount"
+			value="<%= product.dieselAmount %>"
+		/>
+		<button type="submit" class="btn">Checkout</button>
+		<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		<input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+	</form>
+</div>
+
+<script>
+	const getPrompt = () => {
+		document.getElementById('myForm').style.display = 'block';
+	};
+	function closeForm() {
+		document.getElementById('myForm').style.display = 'none';
+	}
+</script>
