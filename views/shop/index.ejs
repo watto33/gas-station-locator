@@ -60,7 +60,7 @@ var geolocate = new mapboxgl.GeolocateControl({
        geolocate.on('geolocate',async function(e) {
       lon = e.coords.longitude;
       lat = e.coords.latitude;
-      var finalData = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/fuel.json?proximity=${lon},${lat}&access_token=pk.eyJ1IjoiZGVlcGkwOTg3IiwiYSI6ImNrY2l4MTQxajByZHUycW8zaXZ0YXl4b3AifQ.hA6JC5W1pgudGCiI8jH_Bg`)
+      var finalData = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/fuel.json?proximity=80,13&access_token=pk.eyJ1IjoiZGVlcGkwOTg3IiwiYSI6ImNrY2l4MTQxajByZHUycW8zaXZ0YXl4b3AifQ.hA6JC5W1pgudGCiI8jH_Bg`)
       let stores = await finalData.json();
 stores.features.forEach(function(store, i){
   store.properties.id = i;
